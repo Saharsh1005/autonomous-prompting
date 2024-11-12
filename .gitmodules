@@ -1,0 +1,3 @@
+[submodule "auto-cot"]
+	path = auto-cot
+	url = https://github.com/amazon-science/auto-cot.git
