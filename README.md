@@ -38,6 +38,12 @@ This project aims to build an autonomous system to optimize prompt generation fo
 
 Summarize findings, challenges, and results, preparing for team review and presentation.
 
+## Group members
+- Ishaan Singh: is14@illinois.edu
+- Henry Yi: weigang2@illinois.edu
+- Saharsh Barve: ssbarve2@illinois.edu
+- Veda Kailasam: vedak2@illinois.edu
+
 --- 
 
 **Contributions and Future Work**: This project will contribute to automating prompt engineering for LLMs, promoting scalability, and improving LLM performance across diverse applications. Future directions may include real-time prompt adjustment based on task complexity.
