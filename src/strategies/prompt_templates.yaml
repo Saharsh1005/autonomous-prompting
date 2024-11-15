@@ -1,0 +1,59 @@
+prompts:
+  zero_shot:
+    description: >
+      A single prompt with no examples provided. Used to test the model's performance without context.
+    template: |
+      Q: {{question}}
+      A:
+    examples: []
+    parameters: {}
+
+  few_shot:
+    description: >
+      A prompt with three examples to guide the model's output for improved performance.
+    template: |
+      {{#examples}}  
+      
+      Q: {{question}}
+      A: 
+
+    examples:
+      - input: "What is 2 + 2?"
+        output: "4"
+      - input: "What is the capital of France?"
+        output: "Paris"
+      - input: "What is the largest planet in our solar system?"
+        output: "Jupiter"
+    parameters: {}
+
+
+  cot:
+    description: >
+      Chain-of-Thought prompting encourages the model to reason step by step.
+    template: |
+      Sample Q: Roger has 5 tennis balls. He buys 2 more cans of tennis balls.
+      Each can has 3 tennis balls. How many tennis balls does he have now?
+      Sample A: Roger started with 5 balls. 2 cans of 3 tennis balls each is 6 tennis balls. 5 + 6 = 11. The answer is 11.
+
+      Q: {{question}}
+      Let's think step by step.
+      A: 
+    examples: []
+    parameters: {}
+
+
+  self_consistency_cot:
+    description: >
+      Self-Consistency with Chain-of-Thought uses multiple reasoning paths to improve reliability.
+    template: |
+      Sample Q: Roger has 5 tennis balls. He buys 2 more cans of tennis balls.
+      Each can has 3 tennis balls. How many tennis balls does he have now?
+      Sample A: Roger started with 5 balls. 2 cans of 3 tennis balls each is 6 tennis balls. 5 + 6 = 11. The answer is 11.
+
+      Q: What is the capital of Italy?
+      Let's think step by step and generate multiple solutions to compare.
+      A:
+    examples: []
+    parameters:
+      num_samples: 5 # Param: Number of reasoning paths to generate
+    aggregation_method: "majority_vote"
