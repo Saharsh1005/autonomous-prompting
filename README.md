@@ -8,35 +8,37 @@ This project aims to build an autonomous system to optimize prompt generation fo
 
 ## Project Outline
 
-### 1. **Research & Analysis**
+**Directory Structure**
+```
+autonomous-prompting/
+├── .github/                # GitHub workflows and configurations
+├── auto-cot/               # Code and resources for Chain-of-Thought and Auto-CoT models
+├── data/                   # Raw and processed datasets
+├── docs/                   # Project documentation and markdown guides
+├── src/                    # Core code for prompt generation, retrieval, agents, etc.
+│   ├── strategies/         # Code for each prompt strategy (e.g., Zero-Shot, Few-Shot, CoT)
+│   │   ├── zero_shot.py
+│   │   ├── few_shot.py
+│   │   ├── cot.py
+│   │   └── cot_self_consistency.py
+│   ├── retrieval/          # Code for the retriever and re-ranker functions
+│   │   ├── generate_embeddings.py
+│   │   └── retrieve_rerank.py
+│   ├── agents/             # Code for planner and executor agents
+│   │   ├── planner.py
+│   │   └── executor.py
+│   └── data/               # Scripts for dataset preparation and loading
+│       └── prepare_dataset.py
+├── notebooks/              # Jupyter notebooks for experiments and analysis
+├── .gitmodules             # Git submodules, if any
+├── LICENSE                 # License for the project
+└── README.md               # Overview of the project
 
-* _To be completed during report drafting._
+```
 
-- **Task 1**: Conduct a literature review on Zero-Shot, Few-Shot, Chain-of-Thought (CoT), and Automatic Chain-of-Thought (Auto-CoT) techniques.
-- **Task 2**: Identify limitations in current approaches, with a focus on efficiency and reasoning errors.
-- **Task 3**: Summarize findings for team discussion.
-
-### 2. **Prompt Optimization Experiments**
-
-- **Task 4**: Implement updates to the evaluator to improve prompt relevance scoring.
-- **Task 5**: Refine the ranking function to prioritize high-quality prompts.
-- **Task 6**: Explore tree search techniques for enhancing prompt diversity and minimizing computational load.
-- **Task 7**: Conduct testing to validate optimizations.
-
-### 3. **Experimental Setup**
-
-- **Task 8**: Establish experimental workflows with modified prompt components (evaluators, ranking, tree search).
-- **Task 9**: Run experiments comparing Zero-Shot, Few-Shot, CoT, and Auto-CoT techniques on selected benchmarks.
-- **Task 10**: Collect and analyze data on computational efficiency and effectiveness.
-
-### 4. **Benchmarking and Evaluation**
-
-- **Task 11**: Define evaluation metrics based on benchmarks (e.g., arithmetic reasoning, commonsense reasoning, multi-step problem-solving).
-- **Task 12**: Analyze performance and present results, highlighting task-specific strengths.
-
-### 5. Final Report **and Presentation**
-
-Summarize findings, challenges, and results, preparing for team review and presentation.
+**Step 1: Initial Setup + Data Preparation** (@Saharsh1005)
+- Task A: Define a prompt structure template for each strategy (Zero-Shot, Few-Shot, CoT, Auto-CoT) in src/strategies/prompt_structures.yaml
+- Task B: Write a script (src/strategies/prompt_loader.py) to dynamically load and format prompt structures from the YAML file.
 
 ## Group members
 - Ishaan Singh: is14@illinois.edu
