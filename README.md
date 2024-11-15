@@ -17,7 +17,9 @@ autonomous-prompting/
 ├── docs/                   # Project documentation and markdown guides
 ├── src/                    # Core code for prompt generation, retrieval, agents, etc.
 │   ├── strategies/         # Code for each prompt strategy (e.g., Zero-Shot, Few-Shot, CoT)
-│   │   ├── zero_shot.py
+│   │   ├── prompt_templates.yaml # 4 prompt templates
+|   |   |-- load_prompt_template.py # load prompt based on given strategy
+|   |   |-- zero_shot.py 
 │   │   ├── few_shot.py
 │   │   ├── cot.py
 │   │   └── cot_self_consistency.py
