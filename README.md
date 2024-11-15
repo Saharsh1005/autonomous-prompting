@@ -38,9 +38,10 @@ autonomous-prompting/
 
 ```
 
-**Step 1: Initial Setup + Data Preparation** (@Saharsh1005)
-- Task A: Define a prompt structure template for each strategy (Zero-Shot, Few-Shot, CoT, Auto-CoT) in src/strategies/prompt_structures.yaml
-- Task B: Write a script (src/strategies/prompt_loader.py) to dynamically load and format prompt structures from the YAML file.
+**Step 1: Initial Setup + Data Preparation** (@Saharsh1005) :
+- [x] Task 1.1: Chore: initial project `repo/subdir-setup/ PR-template` setup
+- [x] Task 1.2: Define a prompt structure template (`src/strategies/prompt_templates.yaml`) for each strategy (Zero-Shot, Few-Shot, CoT, Auto-CoT).
+- [x] Task 1.3: Write a script (`src/strategies/load_prompt_template.py`) to dynamically load and format prompt structures from the YAML file.
 
 ## Group members
 - Ishaan Singh: is14@illinois.edu
