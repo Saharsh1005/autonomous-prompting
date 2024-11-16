@@ -19,18 +19,17 @@ autonomous-prompting/
 │   ├── strategies/         # Code for each prompt strategy (e.g., Zero-Shot, Few-Shot, CoT)
 │   │   ├── prompt_templates.yaml # 4 prompt templates
 |   |   |-- load_prompt_template.py # load prompt based on given strategy
-|   |   |-- zero_shot.py 
-│   │   ├── few_shot.py
-│   │   ├── cot.py
-│   │   └── cot_self_consistency.py
+
 │   ├── retrieval/          # Code for the retriever and re-ranker functions
 │   │   ├── generate_embeddings.py
 │   │   └── retrieve_rerank.py
 │   ├── agents/             # Code for planner and executor agents
 │   │   ├── planner.py
 │   │   └── executor.py
-│   └── data/               # Scripts for dataset preparation and loading
-│       └── prepare_dataset.py
+│   └── dataModel/          # Pydantic data model of our dataset
+|   |   script/
+│       └── create_gsm8k_dataset.py # Script to create the dataset/
+
 ├── notebooks/              # Jupyter notebooks for experiments and analysis
 ├── .gitmodules             # Git submodules, if any
 ├── LICENSE                 # License for the project
