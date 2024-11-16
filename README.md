@@ -43,6 +43,11 @@ autonomous-prompting/
 - [x] Task 1.2: Define a prompt structure template (`src/strategies/prompt_templates.yaml`) for each strategy (Zero-Shot, Few-Shot, CoT, Auto-CoT).
 - [x] Task 1.3: Write a script (`src/strategies/load_prompt_template.py`) to dynamically load and format prompt structures from the YAML file.
 
+**Step 2: Create GSM8k dataset (part 1)** (@Saharsh1005) :
+- [x] Task 2.1: Create a pydantic dataModel comprising of question, prompt, prompt-strategy, answer. (location: `src/dataModel/gsm8k_data_model.py` )
+- [x] Task 2.2: feat: Script to create gsm8k dataset (1000questions*4prompts-per-question --> 4000 records in dataset) (location: `src/scripts/create_gsm8k_dataset.py`)
+- [x] Task 2.3: Create dataset by running the script (location `data/gsm8k_1k.json`)
+
 ## Group members
 - Ishaan Singh: is14@illinois.edu
 - Henry Yi: weigang2@illinois.edu
