@@ -53,6 +53,10 @@ def create_gsm8k_dataset(save_path: str = None) -> None:
         question = data_row.question
         data_row.prompt = generate_prompt(data_row.strategy, question)
     # ============================================================
+
+    # Generate Responses and store in the dataset
+
+    # ===== =============================   =====
     
     # Save as JSON
     with open(save_path, "w") as f:
