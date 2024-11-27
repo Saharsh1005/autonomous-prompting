@@ -1,5 +1,5 @@
 """ 
-Author: Saharsh Barve
+Author: Saharsh Barve, Ishaan Singh
 Description: Script to preprocess & create the GSM8k dataset (4promptStrategy*1000 samples). It will store the final dataset in the data/ directory.
 """
 
@@ -8,14 +8,19 @@ import random
 from datasets import load_dataset
 import json
 import os
+from typing import Literal
+from tqdm import tqdm
 
 # ======== FixME: Ensure import works without src in PYTHONPATH ========
 import sys
+sys.path.append('.')
+sys.path.append('..')
 sys.path.append('src')
 # ======================================================================
 
 from src.dataModel.gsm8k_data_model import GSM8KDataRow, GSM8KDataset
-from src.strategies.load_prompt_template import generate_prompt
+from src.strategies.prompts import get_prompt
+from models import generate_gpt_response, generate_llama_response
 
 def load_gsm8k_data(SAMPLE_COUNT: int  = 1000) -> pd.DataFrame:
     random.seed(42)
@@ -30,34 +35,37 @@ def load_gsm8k_data(SAMPLE_COUNT: int  = 1000) -> pd.DataFrame:
 
     return df[['question', 'answer']]
 
-def create_gsm8k_dataset(save_path: str = None) -> None:
+def create_gsm8k_dataset(model: Literal['openai','llama'], dataset_size: int = 3, save_path: str = None) -> None:
 
-    df = load_gsm8k_data()
+    df = load_gsm8k_data(SAMPLE_COUNT=dataset_size)
     data_records = df.to_dict(orient='records')
 
-    strategies = ["zero_shot", "few_shot", "cot", "self_consistency_cot"]
+    strategies = ["zero-shot", "few-shot", "cot", "sc"]
     
     dataset = GSM8KDataset(
         data=[
             GSM8KDataRow(
                 **record,  
                 prompt="",  
-                strategy=_strategy  
+                strategy=_strategy,
+                response=""  
             )
             for record in data_records
             for _strategy in strategies
         ]
     )  
-    # ===== Add logic to populate prompt and strategy fields ===== 
-    for data_row in dataset.data:
+    # ===== get prompt and generate corresponding response ===== 
+    for data_row in tqdm(dataset.data, desc="Generating prompts and responses"):
         question = data_row.question
-        data_row.prompt = generate_prompt(data_row.strategy, question)
-    # ============================================================
+        data_row.prompt = get_prompt(data_row.strategy, question)
 
-    # Generate Responses and store in the dataset
+        if model == 'llama':
+            model_response = generate_llama_response(data_row.prompt) #FIXME: Check if this is correct
+        else:
+            model_response = generate_gpt_response(data_row.prompt)[1]['content']
+        
+        data_row.response = model_response
 
-    # ===== =============================   =====
-    
     # Save as JSON
     with open(save_path, "w") as f:
         f.write(dataset.model_dump_json(indent=4))
@@ -66,7 +74,7 @@ def create_gsm8k_dataset(save_path: str = None) -> None:
 
 if __name__ == "__main__":
     os.makedirs('./data/', exist_ok=True)
-    create_gsm8k_dataset(save_path='data/gsm8k_1k.json')
+    create_gsm8k_dataset(model='openai' ,dataset_size=1000 ,save_path='data/gsm8k_1k.json')
 
 
 
