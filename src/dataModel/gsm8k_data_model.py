@@ -11,7 +11,8 @@ class GSM8KDataRow(BaseModel):
     question: str
     prompt: str
     answer: str
-    strategy: Union[Literal["zero_shot", "few_shot", "cot", "self_consistency_cot"], Literal[""]]
+    response: str
+    strategy: Union[Literal["zero-shot", "few-shot", "cot", "sc"], Literal[""]]
     # FIXME: Add Priority field if needed
 
 class GSM8KDataset(BaseModel):
