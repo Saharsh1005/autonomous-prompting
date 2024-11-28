@@ -42,13 +42,16 @@ def create_gsm8k_dataset(model: Literal['openai','llama'], dataset_size: int = 3
 
     strategies = ["zero-shot", "few-shot", "cot", "sc"]
     
+    priority_map = {"zero-shot": 0, "few-shot": 1, "cot": 2, "sc": 3}
+
     dataset = GSM8KDataset(
         data=[
             GSM8KDataRow(
                 **record,  
                 prompt="",  
                 strategy=_strategy,
-                response=""  
+                response="" ,
+                priority=priority_map[_strategy]
             )
             for record in data_records
             for _strategy in strategies
