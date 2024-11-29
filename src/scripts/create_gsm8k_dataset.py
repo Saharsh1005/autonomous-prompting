@@ -51,6 +51,7 @@ def create_gsm8k_dataset(model: Literal['openai','llama'], dataset_size: int = 3
                 prompt="",  
                 strategy=_strategy,
                 response="" ,
+                response_answer="",
                 priority=priority_map[_strategy]
             )
             for record in data_records
@@ -63,12 +64,12 @@ def create_gsm8k_dataset(model: Literal['openai','llama'], dataset_size: int = 3
         data_row.prompt = get_prompt(data_row.strategy, question)
 
         if model == 'llama':
-            model_response = generate_llama_response(data_row.prompt) #FIXME: Check if this is correct
+            model_response = generate_llama_response(data_row.prompt)
         else:
-            model_response = generate_gpt_response(data_row.prompt)[1]['content']
+            model_response = generate_gpt_response(data_row.prompt)
         
-        data_row.response = model_response
-
+        data_row.response = model_response['response']
+        data_row.response_answer = model_response['response_answer']
     # Save as JSON
     with open(save_path, "w") as f:
         f.write(dataset.model_dump_json(indent=4))

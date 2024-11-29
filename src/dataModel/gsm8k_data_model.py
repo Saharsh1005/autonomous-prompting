@@ -11,6 +11,7 @@ class GSM8KDataRow(BaseModel):
     question: str
     prompt: str
     answer: str
+    response_answer: str
     response: str
     strategy: Union[Literal["zero-shot", "few-shot", "cot", "sc"], Literal[""]]
     priority: int

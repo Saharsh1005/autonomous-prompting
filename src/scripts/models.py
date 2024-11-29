@@ -5,6 +5,7 @@ import os
 import torch
 import gc
 import transformers
+import re
 # ================== Load API Keys ==================
 def load_api_keys(model_name: str) -> str:
     """Load API keys from .env file."""
@@ -37,7 +38,11 @@ def generate_gpt_response(prompt,messages=None, model="gpt-4o-mini", temperature
     )
     content=response.choices[0].message.content
     messages.append({'role': 'assistant', 'content': content})
-    return messages
+    return {"response": content, "response_answer": extract_answer(content)}
+
+def extract_answer(response):
+    match = re.search(r"Final Numeric Answer:\s*[\*\(]*([\d\.]+)[\*\)]*", response)
+    return match.group(1) if match else None
 
 # ================== LLaMA Model Call [W.I.P - hasnt been tested]==================
 def load_llama_model():
@@ -89,7 +94,7 @@ def generate_llama_response(prompt, max_length=512, temperature=0.7):
         generator = load_llama_model()
         response = generator(prompt, max_length=max_length, num_return_sequences=1, temperature=temperature)[0]
        
-        return response['generated_text']
+        return {"response": response['generated_text'], "response_answer": extract_answer(response['generated_text'])}
     except Exception as e:
         
         print(f"Error generating response with LLaMA: {e}")
