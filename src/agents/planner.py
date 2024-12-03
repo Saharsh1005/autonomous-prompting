@@ -62,7 +62,6 @@ class Planner:
 
         # Generate the prompt using the selected strategy
         prompt = get_prompt(best_strategy, query)
-        print(f"[Planner] Generated Prompt using '{best_strategy}' strategy:\n{prompt}")
         return prompt, best_strategy
 
 # Example usage
