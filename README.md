@@ -8,6 +8,9 @@ This project aims to build an autonomous system to optimize prompt generation fo
 
 ## Project Outline
 
+**Approach**
+![Autonomous Prompting Framework](docs/autonomous-prompting-framework.png)
+
 **Directory Structure**
 ```
 autonomous-prompting/
