@@ -114,7 +114,7 @@ def get_prompt(strategy, question):
         return few_shot_prompt(question)
     elif strategy == 'cot':
         return cot_prompt(question)
-    elif strategy == 'sc':
+    elif strategy == 'sc-cot':
         return sc_prompt(question)
     else:
         raise ValueError('Invalid')
