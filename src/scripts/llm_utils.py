@@ -41,6 +41,19 @@ def extract_last_numeric_value(text):
     else:
         return None
 
+def clean_numeric_value(text): 
+    return re.sub(r'[^\d.+-]', '', text)
+
+def extract_last_numeric_value_general(text):
+    match = re.findall(r'([-+]?(\d*|\d+(,\d+)*)\.\d+(,\d+)*)|([-+]?\d+(,\d+)*)', text)
+    if match:
+        print(match)
+        sorted_match = sorted(list(match[-1]), key=lambda x: len(x))
+        clean_final_answer = clean_numeric_value(sorted_match[-1].strip())
+        return clean_final_answer
+    else:
+        return None
+
 # ================== LLM Response Generation ==================
 def generate_llm_response(prompt: str, model_name: str, retries: int = 3):
     """
