@@ -1,5 +1,6 @@
 
 # ======== FixME: Ensure import works without src in PYTHONPATH ========
+import json
 import sys
 sys.path.append('.')
 sys.path.append('..')
@@ -27,6 +28,13 @@ class ExperimentRunner:
             return sum(1 for entry in results if entry["answer"] == entry["ground_truth"]) / len(results)
         else:
             return None
+        
+    def save_results(self, results: List[Dict]):
+        '''
+        Save the results of the experiment.
+        '''
+        with open('results.json', 'w') as f:
+            json.dump(results, f)
 
     def run(self, model_name: str = "meta/meta-llama-3-8b-instruct", top_k: int = 5):
         '''
@@ -80,3 +88,4 @@ if __name__ == "__main__":
     runner.run()
     print(runner.analyze_results(runner.last_run_results))
     print(runner.last_run_results)
+    runner.save_results(runner.last_run_results)
