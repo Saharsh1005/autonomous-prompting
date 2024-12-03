@@ -1,7 +1,9 @@
 def rerank_results(results):
     for result in results:
-        result['cost'] = (result['priority'] + 1) * result['score']
+        priority = result['priority']
+        score = result['score']
         if result['strategy'] == 'cot-sc':
             if result['reasoning_benefit']:
-                result['cost'] *= 0.9
+                priority *= 0.9
+        result['cost'] = (priority + 1) * score + 0.6 * score + 0.4 * priority
     return sorted(results, key=lambda x: x['cost'])
