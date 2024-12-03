@@ -47,7 +47,6 @@ def clean_numeric_value(text):
 def extract_last_numeric_value_general(text):
     match = re.findall(r'([-+]?(\d*|\d+(,\d+)*)\.\d+(,\d+)*)|([-+]?\d+(,\d+)*)', text)
     if match:
-        print(match)
         sorted_match = sorted(list(match[-1]), key=lambda x: len(x))
         clean_final_answer = clean_numeric_value(sorted_match[-1].strip())
         return clean_final_answer

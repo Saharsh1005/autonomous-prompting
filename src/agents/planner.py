@@ -55,15 +55,17 @@ class Planner:
         # Select the best strategy based on reranked results
         if reranked_results:
             best_strategy = reranked_results[0]['strategy']
+            cost = reranked_results[0]['cost']
             print(f"\n------\n[Planner] Selected best strategy: {best_strategy}\n-----\n")
         else:
             best_strategy = "zero-shot"
+            cost = 0
             print(f"[Planner] No reranked results found. Defaulting to strategy: {best_strategy}")
 
         # Generate the prompt using the selected strategy
         prompt = get_prompt(best_strategy, query)
         print(f"[Planner] Generated Prompt using '{best_strategy}' strategy:\n{prompt}")
-        return prompt, best_strategy
+        return prompt, best_strategy, cost
 
 # Example usage
 if __name__ == "__main__":

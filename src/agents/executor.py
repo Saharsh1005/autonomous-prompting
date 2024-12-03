@@ -11,7 +11,7 @@ from collections import Counter
 import os
 
 from planner import Planner
-from src.scripts.llm_utils import extract_last_numeric_value, join_tokens, generate_llm_response, generate_self_consistent_answers, load_api_keys
+from scripts.llm_utils import extract_last_numeric_value, join_tokens, generate_llm_response, generate_self_consistent_answers, load_api_keys
 
 class Executor:
     def __init__(self, model_name):
