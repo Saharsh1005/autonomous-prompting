@@ -30,7 +30,7 @@ class Executor:
         Returns:
         str: The final generated answer.
         """
-        if strategy == 'sc': # Use self-consistency, generate multiple samples and select the most common answer
+        if strategy == 'sc-cot': # Use self-consistency, generate multiple samples and select the most common answer
             print(f"[Executor] Using self-consistency strategy to generate {num_samples} samples.")
             final_answer = generate_self_consistent_answers(prompt, self.model_name, num_samples)
         else:
@@ -52,8 +52,7 @@ if __name__ == "__main__":
     embedding_dim = 1024
     os.environ['REPLICATE_API_TOKEN'] = REPLICATE_API_TOKEN
     model_version = "meta/meta-llama-3-8b-instruct"
-
-    new_question = "Carla is downloading a 200 GB file. Normally she can download 2 GB/minute, but 40% of the way through the download, Windows forces a restart to install updates, which takes 20 minutes. Then Carla has to restart the download from the beginning. How long does it take to download the file?"
+    new_question = "Rodney is downloading a 200 GB file. Normally she can download 2 GB/minute, but 40perct of the way through the download, Windows forces a restart to install updates, which takes 20 minutes. Then Rodney has to restart the download from the beginning. How long does it take to download the file?"
 
     planner = Planner(cohere_api_key, pinecone_api_key, pinecone_env, index_name, embedding_dim)
     executor = Executor(model_name=model_version)

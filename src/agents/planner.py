@@ -8,7 +8,7 @@ sys.path.append('src')
 from retrieval.retriever import initialize_cohere, initialize_pinecone, retrieve_top_k_questions
 from retrieval.reranker import rerank_results
 from strategies.prompts import get_prompt
-
+from scripts.llm_utils import load_api_keys
 class Planner:
     def __init__(self, cohere_api_key, pinecone_api_key, pinecone_env, index_name, embedding_dim):
         """
@@ -68,8 +68,10 @@ class Planner:
 # Example usage
 if __name__ == "__main__":
     # Initialize API keys and Pinecone settings
-    cohere_api_key = "LWuVw2IhMyo9rccORONU0jNLYWXYFWGkMNQf69c6"
-    pinecone_api_key = "pcsk_2Aovig_CsVHa6sDHrnxX9YM97Ud1EsGW7hcvF1sTy3DNBMhvcouxrtAARup5mACrpMkAAe"
+    cohere_api_key = ""
+    pinecone_api_key = ""
+    cohere_api_key=load_api_keys()[3]
+    pinecone_api_key=load_api_keys()[4]
     pinecone_env = "aws"
     index_name = "ap-retrieval"
     embedding_dim = 1024

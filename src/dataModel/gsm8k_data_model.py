@@ -9,11 +9,9 @@ from typing import List, Literal, Union
 # ========== Pydantic Model for the dataset ============
 class GSM8KDataRow(BaseModel):
     question: str
-    prompt: str
-    answer: str
-    response_answer: str
-    response: str
-    strategy: Union[Literal["zero-shot", "few-shot", "cot", "sc"], Literal[""]]
+    correct_answer: str
+    generated_answer: str
+    strategy: Union[Literal["zero-shot", "few-shot", "cot", "sc-cot"], Literal[""]]
     priority: int
 
 class GSM8KDataset(BaseModel):
