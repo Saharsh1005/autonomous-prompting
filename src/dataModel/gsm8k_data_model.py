@@ -12,7 +12,7 @@ class GSM8KDataRow(BaseModel):
     correct_answer: str
     generated_answer: str
     strategy: Union[Literal["zero-shot", "few-shot", "cot", "sc-cot"], Literal[""]]
-    priority: int
+    priority: Union[int, None]
 
 class GSM8KDataset(BaseModel):
     data: List[GSM8KDataRow]
