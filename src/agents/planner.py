@@ -91,4 +91,4 @@ if __name__ == "__main__":
     planner = Planner(cohere_api_key, pinecone_api_key, pinecone_env, index_name, embedding_dim)
 
     reranked_results = planner.retrieve_and_rerank(new_question, top_k=5, debug=True)
-    prompt, strategy = planner.generate_prompt(new_question, reranked_results, debug=True)
+    prompt, strategy, cost = planner.generate_prompt(new_question, reranked_results, debug=True)

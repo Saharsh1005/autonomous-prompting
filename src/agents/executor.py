@@ -47,7 +47,8 @@ class Executor:
             if debug:
                 print(f"[Executor] The Raw Response: {response}")
             final_answer = extract_last_numeric_value(response)
-        print(f"[Executor] Final Answer: {final_answer}")
+        if debug:
+            print(f"[Executor] Final Answer: {final_answer}")
         return final_answer
     
 
