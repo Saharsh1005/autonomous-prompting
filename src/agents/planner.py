@@ -24,28 +24,31 @@ class Planner:
         self.cohere_client = initialize_cohere(cohere_api_key)
         self.index = initialize_pinecone(pinecone_api_key, pinecone_env, index_name, embedding_dim)
 
-    def retrieve_and_rerank(self, new_question: str, top_k: int=5):
+    def retrieve_and_rerank(self, new_question: str, top_k: int=5, debug: bool = False):
         """
         Retrieve top-K questions and rerank them.
 
         Returns:
         list of dict: Reranked results with metadata.
         """
-        print(f"[Planner] Retrieving top {top_k} similar questions for: {new_question}")
+        if debug:
+            print(f"[Planner] Retrieving top {top_k} similar questions for: {new_question}")
         retrieved_questions = retrieve_top_k_questions(self.index, self.cohere_client, new_question, top_k)
-        print(f"[Planner] Retrieved Questions:")
-        for idx, item in enumerate(retrieved_questions, 1):
-            print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Priority: {item['priority']})")
-        print(f'\n')
+        if debug:
+            print(f"[Planner] Retrieved Questions:")
+            for idx, item in enumerate(retrieved_questions, 1):
+                print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Priority: {item['priority']})")
+            print(f'\n')
 
         reranked_results = rerank_results(retrieved_questions)
-        print(f"[Planner] Reranked Results:")
-        for idx, item in enumerate(reranked_results, 1):
-            print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Cost: {item['cost']})")
-        print(f'\n')
+        if debug:
+            print(f"[Planner] Reranked Results:")
+            for idx, item in enumerate(reranked_results, 1):
+                print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Cost: {item['cost']})")
+            print(f'\n')
         return reranked_results
 
-    def generate_prompt(self, query: str, reranked_results: list):
+    def generate_prompt(self, query: str, reranked_results: list, debug: bool = False):
         """
         Generate the final prompt for the Executor Agent using get_prompt.
 
@@ -56,16 +59,22 @@ class Planner:
         if reranked_results:
             best_strategy = reranked_results[0]['strategy']
             cost = reranked_results[0]['cost']
-            print(f"\n------\n[Planner] Selected best strategy: {best_strategy}\n-----\n")
+            if debug:
+                print(f"\n------\n[Planner] Selected best strategy: {best_strategy}\n-----\n")
         else:
             best_strategy = "zero-shot"
             cost = 0
-            print(f"[Planner] No reranked results found. Defaulting to strategy: {best_strategy}")
+            if debug:
+                print(f"[Planner] No reranked results found. Defaulting to strategy: {best_strategy}")
 
         # Generate the prompt using the selected strategy
         prompt = get_prompt(best_strategy, query)
-        print(f"[Planner] Generated Prompt using '{best_strategy}' strategy:\n{prompt}")
+        if debug:
+            print(f"[Planner] Generated Prompt using '{best_strategy}' strategy:\n{prompt}")
         return prompt, best_strategy, cost
+    
+
+
 
 # Example usage
 if __name__ == "__main__":
@@ -83,5 +92,5 @@ if __name__ == "__main__":
 
     planner = Planner(cohere_api_key, pinecone_api_key, pinecone_env, index_name, embedding_dim)
 
-    reranked_results = planner.retrieve_and_rerank(new_question, top_k=5)
-    prompt, strategy = planner.generate_prompt(new_question, reranked_results)
+    reranked_results = planner.retrieve_and_rerank(new_question, top_k=5, debug=True)
+    prompt, strategy = planner.generate_prompt(new_question, reranked_results, debug=True)

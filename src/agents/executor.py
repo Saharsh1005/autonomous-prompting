@@ -23,19 +23,28 @@ class Executor:
         """
         self.model_name = model_name
 
-    def execute_prompt(self, prompt: str, strategy: str, num_samples: int = 5):
+    def execute_prompt(self, prompt: str, strategy: str, num_samples: int = 5, system_prompt: str = None, debug: bool = False):
         """
         Execute the prompt using the specified strategy.
 
         Returns:
         str: The final generated answer.
         """
+        if system_prompt:
+            prompt = f"{system_prompt}\n\n{prompt}"
         if strategy == 'sc-cot': # Use self-consistency, generate multiple samples and select the most common answer
-            print(f"[Executor] Using self-consistency strategy to generate {num_samples} samples.")
+            if debug:
+                print(f"[Executor] Using self-consistency strategy to generate {num_samples} samples.")
             final_answer = generate_self_consistent_answers(prompt, self.model_name, num_samples)
+        elif strategy == 'sp': # Use chain of thought reasoning, generate a single sample
+            response = generate_llm_response(prompt, self.model_name, max_length=1024)
+            final_answer = (response)
         else:
-            print(f"[Executor] Using {strategy} strategy to generate a single sample.")
+            if debug:
+                print(f"[Executor] Using {strategy} strategy to generate a single sample.")
             response = generate_llm_response(prompt, self.model_name)
+            if debug:
+                print(f"[Executor] The Raw Response: {response}")
             final_answer = extract_last_numeric_value(response)
         return final_answer
     
