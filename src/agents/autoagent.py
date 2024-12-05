@@ -30,7 +30,7 @@ class AutoPromptAgent:
         self.planner = Planner(self.cohere_api_key, self.pinecone_api_key, self.pinecone_env, self.index_name, self.embedding_dim)
         self.executor = Executor(model_name=self.model_version)
 
-    class SolutionPlannerAgent:
+    class SolutionPlanningAgent:
         def __init__(self, planner: Planner, executor: Executor, top_k: int = 5):
             self.planner = planner
             self.executor = executor
@@ -105,7 +105,7 @@ class AutoPromptAgent:
             return self.get_best_strategy(prompt, debug=debug)
             
         
-    class SolutionExecutorAgent:
+    class SolutionExecutionAgent:
         def __init__(self, executor: Executor):
             self.executor = executor
 
@@ -133,12 +133,12 @@ class AutoPromptAgent:
                 }
             },
         ]
-        solution_planner_agent = self.SolutionPlannerAgent(self.planner, self.executor, self.top_k)
-        solution_executor_agent = self.SolutionExecutorAgent(self.executor)
-        prompt, strategy = solution_planner_agent.run(question, debug)
+        solution_planning_agent = self.SolutionPlanningAgent(self.planner, self.executor, self.top_k)
+        solution_execution_agent = self.SolutionExecutionAgent(self.executor)
+        prompt, strategy = solution_planning_agent.run(question, debug)
         if prompt is None or strategy is None:
             raise ValueError("Solution planner agent failed to return a prompt and strategy")
-        answer = solution_executor_agent.run(prompt, strategy, debug)
+        answer = solution_execution_agent.run(prompt, strategy, debug)
         if debug:
             print(f"[AutoPromptAgent] The Final Answer: {answer} with strategy: {strategy}")
         return answer
