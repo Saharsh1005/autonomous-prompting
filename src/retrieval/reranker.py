@@ -16,5 +16,6 @@ def rerank_results(results):
             scaled_confidence *= 1.15
             
         scaled_confidence = min(scaled_confidence, 1.0)
+        result['cost'] = 1 - scaled_confidence
         result['confidence'] = scaled_confidence
     return sorted(results, key=lambda x: x['confidence'], reverse=True)
