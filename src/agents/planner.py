@@ -24,12 +24,17 @@ class Planner:
         self.cohere_client = initialize_cohere(cohere_api_key)
         self.index = initialize_pinecone(pinecone_api_key, pinecone_env, index_name, embedding_dim)
 
+
     def retrieve_and_rerank(self, new_question: str, top_k: int=5, debug: bool = False):
         """
-        Retrieve top-K questions and rerank them.
-
+        Retrieve top-K questions and rerank them using confidence-based scoring.
+        
+        Args:
+            new_question (str): The input question to find similar matches for
+            top_k (int): Number of top results to retrieve
+            
         Returns:
-        list of dict: Reranked results with metadata.
+            list of dict: Reranked results with metadata including confidence scores
         """
         if debug:
             print(f"[Planner] Retrieving top {top_k} similar questions for: {new_question}")
