@@ -13,6 +13,7 @@ import os
 from planner import Planner
 from scripts.llm_utils import extract_last_numeric_value, join_tokens, generate_llm_response, generate_self_consistent_answers, load_api_keys
 
+
 class Executor:
     def __init__(self, model_name):
         """
@@ -46,6 +47,7 @@ class Executor:
             if debug:
                 print(f"[Executor] The Raw Response: {response}")
             final_answer = extract_last_numeric_value(response)
+        print(f"[Executor] Final Answer: {final_answer}")
         return final_answer
     
 

@@ -72,8 +72,6 @@ class Planner:
         if debug:
             print(f"[Planner] Generated Prompt using '{best_strategy}' strategy:\n{prompt}")
         return prompt, best_strategy, cost
-    
-
 
 
 # Example usage

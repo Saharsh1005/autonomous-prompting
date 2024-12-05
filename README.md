@@ -1,6 +1,6 @@
 # Autonomous Prompt Optimization for Large Language Models (LLMs)
 
-This project aims to build an autonomous system to optimize prompt generation for Large Language Models (LLMs), enhancing performance across tasks by balancing generality and specificity. By automating the creation and selection of diverse, high-quality prompts, this system seeks to reduce manual intervention and maximize LLM utility across various applications.
+This project aims to build an autonomous system to optimize prompt selection for Large Language Models (LLMs), enhancing performance across tasks by balancing generality and specificity. By automating the creation and selection of diverse, high-quality prompts, this system seeks to reduce manual intervention and maximize LLM utility across various applications.
 
 **Proposal Document**: [Link to Proposal](https://docs.google.com/document/d/1NuH-juFnK-06XQE0cOYiUpV2loC1j3ePd4-OfXM7r2A/edit)
 
