@@ -24,25 +24,38 @@ class Planner:
         self.cohere_client = initialize_cohere(cohere_api_key)
         self.index = initialize_pinecone(pinecone_api_key, pinecone_env, index_name, embedding_dim)
 
-    def retrieve_and_rerank(self, new_question: str, top_k: int=5):
+    def retrieve_and_rerank(self, new_question: str, top_k: int = 5):
         """
-        Retrieve top-K questions and rerank them.
-
+        Retrieve top-K questions and rerank them using confidence-based scoring.
+        
+        Args:
+            new_question (str): The input question to find similar matches for
+            top_k (int): Number of top results to retrieve
+            
         Returns:
-        list of dict: Reranked results with metadata.
+            list of dict: Reranked results with metadata including confidence scores
         """
         print(f"[Planner] Retrieving top {top_k} similar questions for: {new_question}")
+        
         retrieved_questions = retrieve_top_k_questions(self.index, self.cohere_client, new_question, top_k)
+        
         print(f"[Planner] Retrieved Questions:")
         for idx, item in enumerate(retrieved_questions, 1):
-            print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Priority: {item['priority']})")
-        print(f'\n')
-
+            print(f"  {idx}. Question: {item['question']}")
+            print(f"     Similarity: {item['score']:.3f}")
+            print(f"     Strategy: {item['strategy']} (Priority: {item['priority']})")
+        print()
+        
         reranked_results = rerank_results(retrieved_questions)
+        
         print(f"[Planner] Reranked Results:")
         for idx, item in enumerate(reranked_results, 1):
-            print(f"  {idx}. {item['question']} (Strategy: {item['strategy']}, Cost: {item['cost']})")
-        print(f'\n')
+            print(f"  {idx}. Question: {item['question']}")
+            print(f"     Confidence: {item['confidence']:.3f}")
+            print(f"     Strategy: {item['strategy']}")
+            print(f"     Original Similarity: {item['score']:.3f}")
+        print()
+        
         return reranked_results
 
     def generate_prompt(self, query: str, reranked_results: list):
