@@ -143,68 +143,6 @@ class AutoPromptAgent:
             print(f"[AutoPromptAgent] The Final Answer: {answer} with strategy: {strategy}")
         return answer
 
-    # def run(self, model_name: str = "meta/meta-llama-3-8b-instruct", top_k: int = 5, target_against_strategy: str = None, max_questions: int = None):
-    #     '''
-    #     Run the experiment.
-    #     '''
-    #     cohere_api_key=load_api_keys()[3]
-    #     pinecone_api_key=load_api_keys()[4]
-    #     replicate_api_token=load_api_keys()[2]
-    #     pinecone_env = "aws"
-    #     index_name = "ap-retrieval"
-    #     embedding_dim = 1024
-
-    #     model_version = '"meta/meta-llama-3-8b-instruct"'
-
-    #     planner = Planner(cohere_api_key, pinecone_api_key, pinecone_env, index_name, embedding_dim)
-    #     executor = Executor(model_name=model_version)
-    #     results = []
-
-    #     count = 0
-    #     for index, datum in enumerate(self.dataset):
-    #         if max_questions and count >= max_questions:
-    #             break
-    #         print(f"Question {index+1}: {datum['question']}")
-    #         new_question = datum['question']
-
-    #         print(f"[ExperimentRunner] Reranking question {index+1}")
-    #         reranked_results = planner.retrieve_and_rerank(new_question, top_k=top_k)
-    #         if target_against_strategy:
-    #             against_reranked_results = sorted(reranked_results, key=lambda x: x['strategy'] == target_against_strategy, reverse=True)
-    #             if against_reranked_results[0]['strategy'] != target_against_strategy:
-    #                 print(f"[ExperimentRunner] Skipping question {index+1} because the against strategy ({target_against_strategy}) is not present")
-    #                 continue
-
-    #         prompt, strategy, cost = planner.generate_prompt(new_question, reranked_results)
-    #         print(f"[ExperimentRunner] Generated prompt for question {index+1} with strategy: {strategy} with cost: {cost}")
-
-    #         # Execute the prompt using the Executor
-    #         print(f"[ExperimentRunner] Executing prompt for question {index+1}")
-    #         final_answer = executor.execute_prompt(prompt, strategy)
-    #         print(f"[ExperimentRunner] Final answer for question {index+1}: {final_answer} vs. {extract_last_numeric_value_general(datum['answer'])}")
-    #         if target_against_strategy:
-    #             against_prompt, against_strategy, against_cost = planner.generate_prompt(new_question, against_reranked_results)
-    #             print(f"[ExperimentRunner] Generated against prompt for question {index+1} with strategy: {against_strategy} with cost: {against_cost}")
-    #             print(f"[ExperimentRunner] Against strategy: {against_strategy}")
-    #             against_answer = executor.execute_prompt(against_prompt, against_strategy)
-    #             print(f"[ExperimentRunner] Against answer for question {index+1}: {against_answer} vs. {extract_last_numeric_value_general(datum['answer'])}")
-
-    #         results.append({
-    #             'question': new_question,
-    #             'answer': clean_numeric_value(final_answer),
-    #             'prompt': prompt,
-    #             'strategy': strategy,
-    #             'against_prompt': against_prompt,
-    #             'against_strategy': against_strategy,
-    #             'against_answer': clean_numeric_value(against_answer),
-    #             'ground_truth': extract_last_numeric_value_general(datum['answer']),
-    #             'cost': cost,
-    #             'against_cost': against_cost
-    #         })
-    #         print(f"[ExperimentRunner] Question {index+1} complete with results: {results[-1]}")
-    #         count += 1
-    #     self.last_run_results = results
-        # return results
 
 
 
