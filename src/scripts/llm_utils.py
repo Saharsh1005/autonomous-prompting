@@ -41,8 +41,20 @@ def extract_last_numeric_value(text):
     else:
         return None
 
+def clean_numeric_value(text): 
+    return re.sub(r'[^\d.+-]', '', text)
+
+def extract_last_numeric_value_general(text):
+    match = re.findall(r'([-+]?(\d*|\d+(,\d+)*)\.\d+(,\d+)*)|([-+]?\d+(,\d+)*)', text)
+    if match:
+        sorted_match = sorted(list(match[-1]), key=lambda x: len(x))
+        clean_final_answer = clean_numeric_value(sorted_match[-1].strip())
+        return clean_final_answer
+    else:
+        return None
+
 # ================== LLM Response Generation ==================
-def generate_llm_response(prompt: str, model_name: str, retries: int = 3):
+def generate_llm_response(prompt: str, model_name: str, retries: int = 3, max_length: int = 512, temperature: float = 0.7, top_p: float = 0.9):
     """
     Generate a response from the language model for a given prompt.
 
@@ -53,7 +65,7 @@ def generate_llm_response(prompt: str, model_name: str, retries: int = 3):
         try:
             response = replicate.run(
                 model_name,
-                input={"prompt": prompt, "max_length": 512, "temperature": 0.7, "top_p": 0.9}
+                input={"prompt": prompt, "max_length": max_length, "temperature": temperature, "top_p": top_p}
             )
             response_text = join_tokens(response)
             return response_text
