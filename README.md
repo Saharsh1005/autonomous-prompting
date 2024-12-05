@@ -3,7 +3,8 @@
 This project introduces a Dynamic Prompt Selection pipeline that automates the process of creating, evaluating, and selecting optimal prompts for Large Language Models (LLMs). Our approach addresses existing limitations in prompt engineering, such as operational inefficiencies, computational costs, and context-dependent performance.
 
 **Proposal Document**: [Link to Proposal](https://docs.google.com/document/d/1NuH-juFnK-06XQE0cOYiUpV2loC1j3ePd4-OfXM7r2A/edit)
-**Project Slides**: [Link to presentation](data/CS598-TZ Final Prez_ Dynamic Prompting.pdf)
+
+**Project Slides**: ([data/CS598-TZ Final Prez_ Dynamic Prompting.pdf](https://github.com/Saharsh1005/autonomous-prompting/blob/main/data/CS598-TZ%20Final%20Prez_%20Dynamic%20Prompting.pdf))
 
 
 ## Authors
