@@ -1,61 +1,46 @@
-# Autonomous Prompt Optimization for Large Language Models (LLMs)
+# Dynamic Prompting: Autonomous Prompt Selection for LLMs
 
-This project aims to build an autonomous system to optimize prompt selection for Large Language Models (LLMs), enhancing performance across tasks by balancing generality and specificity. By automating the creation and selection of diverse, high-quality prompts, this system seeks to reduce manual intervention and maximize LLM utility across various applications.
+This project introduces a Dynamic Prompt Selection pipeline that automates the process of creating, evaluating, and selecting optimal prompts for Large Language Models (LLMs). Our approach addresses existing limitations in prompt engineering, such as operational inefficiencies, computational costs, and context-dependent performance.
 
 **Proposal Document**: [Link to Proposal](https://docs.google.com/document/d/1NuH-juFnK-06XQE0cOYiUpV2loC1j3ePd4-OfXM7r2A/edit)
+**Project Slides**: [Link to presentation](data/CS598-TZ Final Prez_ Dynamic Prompting.pdf)
 
----
 
-## Project Outline
+## Authors
+Henry Yi, Ishaan Singh, Saharsh Barve, Veda Kailasam
 
-**Approach**
-![Autonomous Prompting Framework](docs/autonomous-prompting-framework.png)
+## Key Components
 
-**Directory Structure**
-```
-autonomous-prompting/
-├── .github/                # GitHub workflows and configurations
-├── auto-cot/               # Code and resources for Chain-of-Thought and Auto-CoT models
-├── data/                   # Raw and processed datasets
-├── docs/                   # Project documentation and markdown guides
-├── src/                    # Core code for prompt generation, retrieval, agents, etc.
-│   ├── strategies/         # Code for each prompt strategy (e.g., Zero-Shot, Few-Shot, CoT)
-│   │   ├── prompt_templates.yaml # 4 prompt templates
-|   |   |-- load_prompt_template.py # load prompt based on given strategy
+1. **Dataset Generation**: We created a dataset based on GSM8K, generating variations of each question using four strategies: Zero-shot, Few-shot, Chain of Thought (CoT), and Self-Consistency Chain of Thought (SC-CoT).
 
-│   ├── retrieval/          # Code for the retriever and re-ranker functions
-│   │   ├── generate_embeddings.py
-│   │   └── retrieve_rerank.py
-│   ├── agents/             # Code for planner and executor agents
-│   │   ├── planner.py
-│   │   └── executor.py
-│   └── dataModel/          # Pydantic data model of our dataset
-|   |   script/
-│       └── create_gsm8k_dataset.py # Script to create the dataset/
+2. **Planner**: This component prepares the knowledge base by embedding questions, retrieving similar questions, and selecting the optimal strategy based on confidence scores.
 
-├── notebooks/              # Jupyter notebooks for experiments and analysis
-├── .gitmodules             # Git submodules, if any
-├── LICENSE                 # License for the project
-└── README.md               # Overview of the project
+3. **Executor**: The operational core of the framework, executing prompts using the selected strategy and parsing the output to extract the final answer.
 
-```
+## Results
 
-**Step 1: Initial Setup + Data Preparation** (@Saharsh1005) :
-- [x] Task 1.1: Chore: initial project `repo/subdir-setup/ PR-template` setup
-- [x] Task 1.2: Define a prompt structure template (`src/strategies/prompt_templates.yaml`) for each strategy (Zero-Shot, Few-Shot, CoT, Auto-CoT).
-- [x] Task 1.3: Write a script (`src/strategies/load_prompt_template.py`) to dynamically load and format prompt structures from the YAML file.
+### Comparison of AutoPrompt vs COT vs Self-Consistency-COT
 
-**Step 2: Create GSM8k dataset (part 1)** (@Saharsh1005) :
-- [x] Task 2.1: Create a pydantic dataModel comprising of question, prompt, prompt-strategy, answer. (location: `src/dataModel/gsm8k_data_model.py` )
-- [x] Task 2.2: feat: Script to create gsm8k dataset (1000questions*4prompts-per-question --> 4000 records in dataset) (location: `src/scripts/create_gsm8k_dataset.py`)
-- [x] Task 2.3: Create dataset by running the script (location `data/gsm8k_1k.json`)
+| Strategy | Accuracy | Avg Tokens Per Question | Average Runtime Per Question (seconds) |
+|----------|----------|-------------------------|----------------------------------------|
+| AutoPrompt | 89% | 399.03 | 3.21 |
+| COT | 79% | 489.06 | 3.86 |
+| Self-Consistency (w/ COT) | 88% | 2445.3 | 16.78 |
 
-## Group members
-- Ishaan Singh: is14@illinois.edu
-- Henry Yi: weigang2@illinois.edu
-- Saharsh Barve: ssbarve2@illinois.edu
-- Veda Kailasam: vedak2@illinois.edu
 
---- 
+## Key Findings
 
-**Contributions and Future Work**: This project will contribute to automating prompt engineering for LLMs, promoting scalability, and improving LLM performance across diverse applications. Future directions may include real-time prompt adjustment based on task complexity.
+- AutoPrompt achieves superior accuracy while using 5x fewer tokens than SC-CoT and running 5x faster.
+- Dynamic strategy selection outperforms static approaches, matching SC-COT's accuracy while maintaining computational efficiency.
+- The system successfully addresses the accuracy-efficiency tradeoff, improving accuracy by 10% over base CoT while reducing token usage by 18%.
+
+## Future Work
+
+- Implement reinforcement learning for real-time strategy adaptation
+- Develop user feedback mechanisms for continuous system improvement
+- Extend the framework to broader task domains beyond mathematical reasoning
+
+## References
+
+1. [Prompt Engineering Guide](https://www.promptingguide.ai/)
+2. [Lilian Weng's Blog on Prompt Engineering](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/)
