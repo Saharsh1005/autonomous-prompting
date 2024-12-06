@@ -4,8 +4,8 @@ from reranker import rerank_results
 
 def main():
     # Initialize API keys and environment
-    cohere_api_key = "LWuVw2IhMyo9rccORONU0jNLYWXYFWGkMNQf69c6"
-    pinecone_api_key = "pcsk_2Aovig_CsVHa6sDHrnxX9YM97Ud1EsGW7hcvF1sTy3DNBMhvcouxrtAARup5mACrpMkAAe"
+    cohere_api_key = "" #removed keys for protection
+    pinecone_api_key = "" # removed keys for protection
     pinecone_env = "aws"
     index_name = "ap-retrieval"
     embedding_dim = 1024
