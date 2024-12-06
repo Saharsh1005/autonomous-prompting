@@ -24,7 +24,7 @@ Henry Yi, Ishaan Singh, Saharsh Barve, Veda Kailasam
 
 | Strategy | Accuracy | Avg Tokens Per Question | Average Runtime Per Question (seconds) |
 |----------|----------|-------------------------|----------------------------------------|
-| AutoPrompt | 89% | 399.03 | 3.21 |
+| **AutoPrompt** | **89%** | **399.03** | **3.21** |
 | COT | 79% | 489.06 | 3.86 |
 | Self-Consistency (w/ COT) | 88% | 2445.3 | 16.78 |
 
