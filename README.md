@@ -18,6 +18,12 @@ Henry Yi, Ishaan Singh, Saharsh Barve, Veda Kailasam
 
 3. **Executor**: The operational core of the framework, executing prompts using the selected strategy and parsing the output to extract the final answer.
 
+## Framework
+![docs/autonomous-prompting-pipeline.png](docs/autonomous-prompting-pipeline.png)
+
+![docs/autonomous-prompting-framework.png](docs/autonomous-prompting-framework.png)
+
+
 ## Results
 
 ### Comparison of AutoPrompt vs COT vs Self-Consistency-COT
