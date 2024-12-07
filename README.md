@@ -4,7 +4,7 @@ This project introduces a Dynamic Prompt Selection pipeline that automates the p
 
 **Proposal Document**: [Link to Proposal](https://docs.google.com/document/d/1NuH-juFnK-06XQE0cOYiUpV2loC1j3ePd4-OfXM7r2A/edit)
 
-**Project Slides**: ([data/CS598-TZ Final Prez_ Dynamic Prompting.pdf](https://github.com/Saharsh1005/autonomous-prompting/blob/main/data/CS598-TZ%20Final%20Prez_%20Dynamic%20Prompting.pdf))
+**Project Slides**: [Project Presentation](https://github.com/Saharsh1005/autonomous-prompting/blob/main/docs/autonomous-prompting-slides.pdf)
 
 
 ## Authors
