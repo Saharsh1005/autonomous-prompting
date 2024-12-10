@@ -12,6 +12,11 @@ from agents.executor import Executor
 from scripts.llm_utils import clean_numeric_value, extract_last_numeric_value_general, load_api_keys
 from datasets import load_dataset
 
+
+from dotenv import load_dotenv
+import os
+from datasets import load_dataset
+
 class AutoPromptAgent:
     def __init__(self, cohere_api_key: str, pinecone_api_key: str, replicate_api_token: str, top_k: int = 5):
         '''
@@ -148,11 +153,16 @@ class AutoPromptAgent:
 
 if __name__ == "__main__":
     # Initialize API keys and Pinecone settings
+    # Load .env file
+    load_dotenv()  # By default, it looks for a .env file in the current working directory
 
+    # Access variables
+    cohere_api_key = os.getenv("COHERE_API_KEY")
+    pinecone_api_key = os.getenv("PINECONE_API_KEY")
+    replicate_api_token = os.getenv("REPLICATE_API_TOKEN")
+    agent = AutoPromptAgent(cohere_api_key=cohere_api_key, pinecone_api_key=pinecone_api_key, replicate_api_token=replicate_api_token)
+    
     dataset = load_dataset("gsm8k", "main")
     test_dataset = dataset['test']
-    runner = AutoPromptAgent()
-    against_strategy = 'cot'
-    runner.run(target_against_strategy=against_strategy, max_questions=10)
-    print(f"Accuracy (auto-prompt vs. {against_strategy}): ", runner.analyze_results(runner.last_run_results, 'accuracy', against_strategy))
-    runner.save_results(runner.last_run_results)
+    answer = agent.run(test_dataset[1]['question'], debug=True)
+    print(f"[AutoPromptAgent] The Final Answer: {answer}")
